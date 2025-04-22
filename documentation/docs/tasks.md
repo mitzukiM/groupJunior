@@ -22,7 +22,7 @@ def create_docs():
 -[] create project
 # Tables
 
-| content       | another column | add +          |                                Notes |
-|:--------------|:--------------:|----------------|-------------------------------------:|
-| my data1      |    value 1     | more data 1    | nothing special[](посилання на щось) |
-| my sasaadata1 | value 1 dfgdgs | more data sad1 |                    nothi23ng special |
+| content       | another column | add +          |                                    Notes |
+|:--------------|:--------------:|----------------|-----------------------------------------:|
+| my data1      |    value 1     | more data 1    |     nothing special[](посилання на щось) |
+| my sasaadata1 | value 1 dfgdgs | more data sad1 |        <br/            nothi23ng special |
