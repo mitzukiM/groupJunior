@@ -5,7 +5,10 @@ from sqlalchemy import pool
 
 from alembic import context
 from applications.database.base_models import  Base
+from applications.users.models import User
 from settings import settings
+
+
 
 
 
