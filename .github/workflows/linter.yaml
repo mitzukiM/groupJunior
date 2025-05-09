@@ -47,6 +47,6 @@ jobs:
       - name: Run tests
         run: |
           source .venv/bin/activate
-          black . --check
-          isort .
+          black . --check --line-length 120 
+          isort . --line-length 120
           flake8 .
