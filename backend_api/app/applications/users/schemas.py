@@ -18,7 +18,7 @@ class PasswordField(BaseModel):
         if len(password) < 8:
             raise ValueError("Too short password")
 
-        if "" in password:
+        if " " in password:
             raise ValueError("No spaces in password")
 
         return values
