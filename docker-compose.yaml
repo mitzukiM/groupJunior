@@ -38,6 +38,7 @@ services:
       - "25000:25000"
     command:
       sh -c "
+      alembic upgrade head && \
       uvicorn main:app --port=25000 --host=0.0.0.0 --reload
       "
     networks:
