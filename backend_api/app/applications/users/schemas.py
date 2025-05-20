@@ -26,3 +26,9 @@ class PasswordField(BaseModel):
 
 class RegisterUserField(BaseFields, PasswordField):
     pass
+
+
+class BaseUserInfo(BaseFields):
+    id: int
+
+
