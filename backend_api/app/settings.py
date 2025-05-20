@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     DEBUG: bool = False
 
     JWT_SECRET:str
-    JWE_ALGORITHM:str
+    JWT_ALGORITHM:str
 
     @property
     def DATABASE_URL_ASYNC(self) -> str:
