@@ -1,17 +1,12 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from applications.users.models import User
+from applications.users.crud import create_user_in_db
 from applications.users.schemas import BaseFields, RegisterUserField
 from database.session_dependencies import get_async_session
 
 router_users = APIRouter()
 
-
-async def create_user_in_db(email, name, password, session: AsyncSession):
-    new_user = User(email=email, hashed_password=password, name=name)
-    session.add(new_user)
-    await session.commit()
 
 
 @router_users.post("/create", status_code=status.HTTP_201_CREATED)
