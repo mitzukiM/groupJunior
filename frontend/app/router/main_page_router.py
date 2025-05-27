@@ -14,3 +14,8 @@ async def index(request : Request):
     response = templates.TemplateResponse('index.html',context=context)
     return response
 
+@router.get('/login')
+async def login(request : Request):
+    context = {'request': request}
+    response = templates.TemplateResponse('login.html', context=context)
+    return response
