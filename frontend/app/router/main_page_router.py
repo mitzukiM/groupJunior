@@ -3,7 +3,8 @@ from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 import httpx
 
-from backend_api.api import register_user
+
+from backend_api.api import register_user, get_user_info,login_user
 from settings import settings
 
 router = APIRouter()
@@ -29,24 +30,7 @@ async def index(request: Request, user: dict = Depends(get_current_user_with_tok
     return response
 
 
-async def login_user(user_email: str, password: str):
-    async with httpx.AsyncClient() as client:
-        response = await client.post(
-            url=f'{settings.BACKEND_API}auth/login',
-            data={"username": user_email, "password": password},
-        )
-        print(response.json())
-        return response.json()
 
-
-async def get_user_info(access_token: str):
-    async with httpx.AsyncClient() as client:
-        response = await client.get(
-            url=f'{settings.BACKEND_API}auth/get-me-info',
-            headers={"Authorization": f"Bearer {access_token}"},
-        )
-        print(response.json())
-        return response.json()
 
 
 @router.get("/login")
@@ -122,6 +106,7 @@ async def register(
         access_token = user_tokens.get("access_token")
 
         response = RedirectResponse(redirect_url, status_code=status.HTTP_303_SEE_OTHER)
+        print(access_token,77777777777777777777)
         response.set_cookie(
             key="access_token", value=access_token, httponly=True, max_age=60 * 5
         )

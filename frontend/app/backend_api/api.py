@@ -14,20 +14,18 @@ async def login_user(user_email: str, password: str):
 
 async def register_user(user_email: str, password: str, name: str):
     async with httpx.AsyncClient() as client:
-        print(settings.BACKEND_API,999999999999999999999999999)
         response = await client.post(
             url=f"{settings.BACKEND_API}users/create",
             json={"name": name, "password": password, "email": user_email},
             headers={"Content-Type": "application/json"},
         )
-        print(response.json(), 8888888888888888888)
         return response.json()
 
 
 async def get_user_info(access_token: str):
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            url=f"{settings.BACKEND_API}auth/get-my-info",
+            url=f"{settings.BACKEND_API}auth/get-me-info",
             headers={"Authorization": f"Bearer {access_token}"},
         )
         print(response.json())
