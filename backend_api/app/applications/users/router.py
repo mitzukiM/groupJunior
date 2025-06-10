@@ -1,5 +1,6 @@
 import uuid
-
+from services.rabbit.constants import SupportedQueues
+from services.rabbit.rabbitmq_service import rabbitmq_broker
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -27,7 +28,7 @@ async def create_user(
     created_user = await create_user_in_db(
         new_user.email, new_user.name, new_user.password, session
     )
-    # todo send email
+    await rabbitmq_broker.send_message({"ss": "bb"}, SupportedQueues.USER_REGISTRATION)
     return created_user
 
 
