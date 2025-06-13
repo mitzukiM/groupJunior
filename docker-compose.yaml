@@ -22,7 +22,7 @@ services:
     ports:
       - "6655:${POSTGRES_PORT}"
     volumes:
-      - postgres_datastorage:/var/lib/postgresgl/data
+      - postgres_datastorage:/var/lib/postgresql/data
     networks:
       - main_network
 
@@ -35,6 +35,8 @@ services:
     container_name: backend_api
     hostname: backend_api
     restart: always
+    depends_on:
+      - notification
     env_file:
       - .env
     volumes:
