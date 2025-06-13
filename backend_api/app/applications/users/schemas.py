@@ -24,7 +24,7 @@ class PasswordField(BaseModel):
         return values
 
 
-class RegisterUserField(BaseFields, PasswordField):
+class RegisterUserFields(BaseFields, PasswordField):
     pass
 
 
