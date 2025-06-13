@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     RMQ_USER : str
     RMQ_PASSWORD : str
 
+    TOKEN_UKR_NET: str
+    USER: str
+    SMTP_SERVER: str
 
 
 @lru_cache()
