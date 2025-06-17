@@ -10,6 +10,8 @@ services:
     volumes:
       - ./documentation:/docs:ro
 
+
+
   local_database:
     image: postgres:16-alpine
     container_name: local_database
@@ -20,9 +22,11 @@ services:
     ports:
       - "6655:${POSTGRES_PORT}"
     volumes:
-      - postgres_datastorage:/var/lib/postgresgl/data
+      - postgres_datastorage:/var/lib/postgresql/data
     networks:
       - main_network
+
+
 
   backend_api:
     build:
@@ -31,6 +35,8 @@ services:
     container_name: backend_api
     hostname: backend_api
     restart: always
+    depends_on:
+      - notification
     env_file:
       - .env
     volumes:
@@ -44,6 +50,9 @@ services:
       "
     networks:
       - main_network
+
+
+
 
   frontend:
     build:
@@ -65,6 +74,25 @@ services:
     networks:
       - main_network
 
+
+
+
+  notification:
+    build:
+      dockerfile: Dockerfile
+      context: ./notification_service
+    container_name: notification
+    hostname: notification
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./notification_service/app:/app
+
+    command:
+      sh -c "
+      python /app/main.py
+      "
 
 
   nginx_2:
