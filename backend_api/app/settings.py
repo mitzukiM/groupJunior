@@ -23,6 +23,13 @@ class Settings(BaseSettings):
     RMQ_USER : str
     RMQ_PASSWORD : str
 
+
+    ACCESS_KEY: str
+    SECRET_KEY: str
+    BUCKET_NAME: str
+    ENDPOINT: str
+    PUBLIC_URL: str
+
     @property
     def DATABASE_URL_ASYNC(self) -> str:
         return (
