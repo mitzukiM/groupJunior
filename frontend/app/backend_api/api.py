@@ -47,5 +47,4 @@ async def get_products(q :str =""):
             url=f"{settings.BACKEND_API}products/",
             params = {"q":q}
         )
-
         return response.json()
