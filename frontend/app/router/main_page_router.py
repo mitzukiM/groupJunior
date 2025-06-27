@@ -4,8 +4,7 @@ from fastapi.templating import Jinja2Templates
 import httpx
 
 
-from backend_api.api import register_user, get_user_info,login_user,get_products
-
+from backend_api.api import get_current_user_with_token, login_user, register_user, get_products, get_product
 from settings import settings
 
 router = APIRouter()
@@ -38,10 +37,10 @@ async def index(request: Request, query: str = Form(''), user: dict = Depends(ge
 
 @router.get('/product/{product_id}')
 async def product_detail(request: Request, product_id: int, user: dict = Depends(get_current_user_with_token)):
-    # products = await get_products(query)
+    product = await get_products(product_id)
     context = {
         'request': request,
-        # "product": product,
+        "product": product,
     }
     if user.get('name'):
         context['user'] = user
