@@ -71,3 +71,8 @@ async def get_products_data(params: SearchParamsSchema, session: AsyncSession):
         'limit': params.limit,
         'pages': math.ceil(total / params.limit)
     }
+
+async def get_product_by_pk(pk: int, session: AsyncSession) -> Product | None:
+    query = select(Product).filter(Product.id == pk)
+    result = await session.execute(query)
+    return result.scalar_one_or_none()
