@@ -13,7 +13,14 @@ from applications.users.schemas import BaseUserInfo, RegisterUserFields
 from database.session_dependencies import get_async_session
 
 products_router = APIRouter()
+cart_router = APIRouter()
 
+@cart_router.get("/")
+async def get_current_cart(
+    user: User = Depends(get_current_user),
+    session: AsyncSession = Depends(get_async_session),
+):
+    pass
 
 @products_router.post('/',  dependencies=[Depends(admin_required)])
 async def create_product(
