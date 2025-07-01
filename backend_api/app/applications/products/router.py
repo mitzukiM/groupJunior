@@ -1,5 +1,5 @@
 from typing import Annotated
-from applications.products.crud import create_product_in_db, get_products_data
+from applications.products.crud import create_product_in_db, get_products_data, get_or_create_cart
 from fastapi import APIRouter, Body, UploadFile, Depends,HTTPException,status
 import uuid
 from applications.products.schemas import ProductSchema,SearchParamsSchema
@@ -20,7 +20,8 @@ async def get_current_cart(
     user: User = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session),
 ):
-    pass
+    cart = await get_or_create_cart(user_id=user.id,session=session)
+
 
 @products_router.post('/',  dependencies=[Depends(admin_required)])
 async def create_product(
