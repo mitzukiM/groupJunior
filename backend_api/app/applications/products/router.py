@@ -2,7 +2,7 @@ from typing import Annotated
 from applications.products.crud import create_product_in_db, get_products_data, get_or_create_cart
 from fastapi import APIRouter, Body, UploadFile, Depends,HTTPException,status
 import uuid
-from applications.products.schemas import ProductSchema,SearchParamsSchema
+from applications.products.schemas import ProductSchema, SearchParamsSchema, CartSchema
 from applications.products.crud import create_product_in_db,get_product_by_pk
 from services.s3.s3 import s3_storage
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -19,9 +19,9 @@ cart_router = APIRouter()
 async def get_current_cart(
     user: User = Depends(get_current_user),
     session: AsyncSession = Depends(get_async_session),
-):
+) -> CartSchema:
     cart = await get_or_create_cart(user_id=user.id,session=session)
-
+    return cart
 
 @products_router.post('/',  dependencies=[Depends(admin_required)])
 async def create_product(
