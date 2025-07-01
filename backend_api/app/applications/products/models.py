@@ -1,5 +1,6 @@
 import uuid
 from datetime import datetime
+from mailbox import Mailbox
 
 from sqlalchemy.dialects.postgresql import ARRAY
 
@@ -9,12 +10,14 @@ from sqlalchemy.sql import func
 
 from database.base_models import Base
 
-
-class Product(Base):
-    __tablename__ = "products"
-
+class ModelCommonMixin:
     id: Mapped[int] = mapped_column(primary_key=True)
     created_at: Mapped[datetime] = mapped_column(default=func.now())
+
+class Product(ModelCommonMixin,Base):
+    __tablename__ = "products"
+
+
     uuid_data: Mapped[uuid.UUID] = mapped_column(default=uuid.uuid4)
 
 
@@ -29,11 +32,17 @@ class Product(Base):
     def __str__(self):
         return f'Product {self.title} - {self.id}'
 
-class Cart(Base):
+class Cart(ModelCommonMixin,Base):
     __tablename__ = "carts"
 
 
-class CartProduct(Base):
+    user_id : Mapped[int] = mapped_column(ForeignKey("users.id"))
+    is_closed:Mapped[bool] = mapped_column(default=False)
+
+
+
+
+class CartProduct(ModelCommonMixin,Base):
     __tablename__ = "cart_products"
 
 
@@ -41,3 +50,7 @@ class CartProduct(Base):
     product_id : Mapped[int] = mapped_column(ForeignKey("products.id"))
     price: Mapped[float] = mapped_column(default=0.0)
     quantity: Mapped[float] = mapped_column(default=0.0)
+
+    @property
+    def total(self) -> float:
+        return self.price * self.quantity
