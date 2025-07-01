@@ -4,7 +4,7 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool
 
 from applications.users.models import User
-from applications.products.models import Product
+from applications.products.models import Product,Cart,CartProduct
 from database.base_models import Base
 from settings import settings
 

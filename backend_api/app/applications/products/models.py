@@ -3,7 +3,7 @@ from datetime import datetime
 
 from sqlalchemy.dialects.postgresql import ARRAY
 
-from sqlalchemy import String
+from sqlalchemy import String,ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.sql import func
 
@@ -29,3 +29,15 @@ class Product(Base):
     def __str__(self):
         return f'Product {self.title} - {self.id}'
 
+class Cart(Base):
+    __tablename__ = "carts"
+
+
+class CartProduct(Base):
+    __tablename__ = "cart_products"
+
+
+    cart_id : Mapped[int] = mapped_column(ForeignKey("carts.id"))
+    product_id : Mapped[int] = mapped_column(ForeignKey("products.id"))
+    price: Mapped[float] = mapped_column(default=0.0)
+    quantity: Mapped[float] = mapped_column(default=0.0)
