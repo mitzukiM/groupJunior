@@ -30,5 +30,3 @@ class RegisterUserFields(BaseFields, PasswordField):
 
 class BaseUserInfo(BaseFields):
     id: int
-
-
