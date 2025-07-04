@@ -13,20 +13,28 @@ class ProductSchema(BaseModel):
     main_image: str
     images: list[str]
 
+    class Config:
+        from_attributes = True
 
 class CartProductSchema(BaseModel):
     price: float
     quantity: float
     total: float
     product: ProductSchema
-
+    class Config:
+        from_attributes = True
 
 class CartSchema(BaseModel):
     is_closed: bool
     user_id: int
     cost: float
     cart_products: list[CartProductSchema]
+    class Config:
+        from_attributes = True
 
+    def filter_zero_quantity_products(self):
+        self.cart_products = [product for product in self.cart_products if product.quantity > 0]
+        return self
 
 class SortEnum(StrEnum):
     ASC = "asc"

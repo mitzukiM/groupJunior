@@ -37,6 +37,7 @@ class AuthHandler:
         access_token = await self.create_token(payload, timedelta(minutes=5))
         refresh_token = await self.create_token(payload, timedelta(days=1))
         return {"access_token": access_token, "refresh_token": refresh_token}
+        access_token = await self.create_token(payload, timedelta(minutes=50))
 
     async def create_token(self, payload: dict, expiry: timedelta) -> str:
         now = datetime.now()
